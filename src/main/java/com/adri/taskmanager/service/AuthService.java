@@ -2,6 +2,7 @@ package com.adri.taskmanager.service;
 
 import com.adri.taskmanager.dao.UserDAO;
 import com.adri.taskmanager.model.User;
+import com.adri.taskmanager.security.PasswordUtils;
 
 public class AuthService {
 
@@ -11,8 +12,10 @@ public class AuthService {
 
         User user = userDAO.getUserByEmail(email);
 
-        if (user == null) return null;
-        if (!user.getPasswordHash().equals(password)) return null;
+        if (user == null)
+            throw new IllegalArgumentException("Email o contraseña incorrectos");
+        if (!PasswordUtils.checkPassword(password, user.getPasswordHash()))
+            throw new IllegalArgumentException("Email o contraseña incorrectos");
 
         return user;
     }

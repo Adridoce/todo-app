@@ -2,6 +2,7 @@ package com.adri.taskmanager.service;
 
 import com.adri.taskmanager.dao.UserDAO;
 import com.adri.taskmanager.model.User;
+import com.adri.taskmanager.security.PasswordUtils;
 
 public class UserService {
 
@@ -18,7 +19,9 @@ public class UserService {
         if (password.length() < 6)
             throw new IllegalArgumentException("La contraseña debe tener al menos 6 carácteres");
 
-        User user = new User(email, password);
+        String hashedPassword = PasswordUtils.hashPassword(password);
+
+        User user = new User(email, hashedPassword);
         userDAO.createUser(user);
         return user;
     }

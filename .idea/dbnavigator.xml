@@ -24,14 +24,17 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4fb4c3af-a863-48c3-9787-8ad6a88d1f12">
-      <console name="todo_app" type="STANDARD" schema="todo_app" session="Main"><![CDATA[delete from tasks]]></console>
+      <console name="todo_app" type="STANDARD" schema="todo_app" session="Main"><![CDATA[delete from users]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="4fb4c3af-a863-48c3-9787-8ad6a88d1f12" object-ref="schemas/todo_app/tables/tasks" />
+      <object connection-id="4fb4c3af-a863-48c3-9787-8ad6a88d1f12" object-ref="schemas/todo_app/tables/users" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="4fb4c3af-a863-48c3-9787-8ad6a88d1f12" />
