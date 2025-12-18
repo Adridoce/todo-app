@@ -24,7 +24,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4fb4c3af-a863-48c3-9787-8ad6a88d1f12">
-      <console name="todo_app" type="STANDARD" schema="todo_app" session="Main" />
+      <console name="todo_app" type="STANDARD" schema="todo_app" session="Main"><![CDATA[delete from tasks]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -39,6 +39,9 @@
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="4fb4c3af-a863-48c3-9787-8ad6a88d1f12" dataset="todo_app.tasks" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fb4c3af-a863-48c3-9787-8ad6a88d1f12" dataset="todo_app.users" active-filter-id="EMPTY_FILTER" />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -575,5 +578,9 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
+    <execution-variable-types />
   </component>
 </project>

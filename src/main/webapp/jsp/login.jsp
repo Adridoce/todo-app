@@ -1,28 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
-    <head>
-        <title>Login</title>
-    </head>
+<%@ include file="includes/header.jsp" %>
 
-    <body>
+<h2 class="mb-4" xmlns:c="http://www.w3.org/1999/XSL/Transform">Login</h2>
 
-        <h2>Login</h2>
+<c:if test="${not empty sessionScope.error}">
+    <div class="alert alert-danger">
+        ${sessionScope.error}
+    </div>
+    <c:remove var="error" scope="session"/>
+</c:if>
 
-        <c:if test="${not empty sessionScope.error}">
-            <p style="color:red">${sessionScope.error}</p>
-            <c:remove var="error" scope="session"/>
-        </c:if>
+<form method="post" action="${pageContext.request.contextPath}/login" class="w-50">
 
-        <form method="post" action="${pageContext.request.contextPath}/login">
-            <input type="email" name="email" placeholder="Email" required />
-            <br><br>
-            <input type="password" name="password" placeholder="Contraseña" required />
-            <br><br>
-            <button type="submit">Entrar</button>
-        </form>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" required>
+    </div>
 
-    </body>
-</html>
+    <div class="mb-3">
+        <label class="form-label">Contraseña</label>
+        <input type="password" name="password" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Entrar</button>
+    <a href="${pageContext.request.contextPath}/register" class="btn btn-link">
+        Registrarse
+    </a>
+</form>
+
+<%@ include file="includes/footer.jsp" %>

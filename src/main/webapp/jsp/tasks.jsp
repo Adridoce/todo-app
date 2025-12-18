@@ -1,71 +1,81 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ include file="includes/header.jsp" %>
 
-<!DOCTYPE html>
-<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
-<head>
-    <meta charset="UTF-8">
-    <title>Mis tareas</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        h1 { margin-bottom: 20px; }
-        form { margin-bottom: 20px; }
-        ul { list-style: none; padding: 0; }
-        li { margin-bottom: 10px; }
-        .completed { text-decoration: line-through; color: gray; }
-        button { margin-left: 10px; }
-    </style>
-</head>
-<body>
+<h2 class="mb-4">Mis tareas</h2>
 
-<h1>Mis tareas</h1>
-<a href="${pageContext.request.contextPath}/logout">Cerrar sesión</a>
-
-<!-- Mostrar error si existe -->
-<c:if test="${not empty sessionScope.error}">
-    <p style="color:red;">${sessionScope.error}</p>
-    <c:remove var="error" scope="session"/>
+<c:if test="${not empty sessionScope.message}">
+    <div class="alert alert-success">
+        ${sessionScope.message}
+    </div>
+    <c:remove var="message" scope="session"/>
 </c:if>
 
-<!-- Formulario crear tarea -->
-<form method="post" action="${pageContext.request.contextPath}/tasks">
-    <input type="hidden" name="action" value="create">
-    <input type="text" name="title" placeholder="Nueva tarea" required>
-    <button type="submit">Crear</button>
+<c:if test="${empty tasks}">
+    <div class="alert alert-info">
+        No tienes tareas todavía.
+    </div>
+</c:if>
+
+<c:if test="${not empty tasks}">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Fecha creación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="task" items="${tasks}">
+            <tr>
+                <td>${task.title}</td>
+                <td>${task.creationDate}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${task.completed}">
+                            <span class="badge bg-success">Completada</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="badge bg-warning text-dark">Pendiente</span>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <form method="post" action="${pageContext.request.contextPath}/tasks" class="d-inline">
+                        <input type="hidden" name="action" value="complete"/>
+                        <input type="hidden" name="taskId" value="${task.id}"/>
+                        <button class="btn btn-sm btn-success">Completar</button>
+                    </form>
+
+                    <form method="post" action="${pageContext.request.contextPath}/tasks" class="d-inline"
+                          onsubmit="return confirm('¿Seguro que quieres eliminar esta tarea?');">
+                        <input type="hidden" name="action" value="delete"/>
+                        <input type="hidden" name="taskId" value="${task.id}"/>
+                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</c:if>
+
+<hr>
+
+<h4>Nueva tarea</h4>
+
+<form method="post" action="${pageContext.request.contextPath}/tasks" class="w-50">
+    <input type="hidden" name="action" value="create"/>
+
+    <div class="mb-3">
+        <input type="text" name="title" class="form-control"
+               placeholder="Título de la tarea" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear tarea</button>
 </form>
 
-<!-- Lista de tareas -->
-<ul>
-    <c:choose>
-        <c:when test="${not empty tasks}">
-            <c:forEach var="task" items="${tasks}">
-                <li>
-                    <span class="${task.completed ? 'completed' : ''}">
-                        ${task.title}
-                    </span>
-
-                    <!-- Completar -->
-                    <form method="post" action="${pageContext.request.contextPath}/tasks" style="display:inline;">
-                        <input type="hidden" name="action" value="complete">
-                        <input type="hidden" name="taskId" value="${task.id}">
-                        <button type="submit">Completar</button>
-                    </form>
-
-                    <!-- Eliminar -->
-                    <form method="post" action="${pageContext.request.contextPath}/tasks" style="display:inline;">
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="taskId" value="${task.id}">
-                        <button type="submit">Eliminar</button>
-                    </form>
-                </li>
-            </c:forEach>
-        </c:when>
-        <c:otherwise>
-            <li>No tienes tareas aún</li>
-        </c:otherwise>
-    </c:choose>
-</ul>
-
-</body>
-</html>
+<%@ include file="includes/footer.jsp" %>
